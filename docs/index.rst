@@ -10,8 +10,7 @@ Fovea
 #####
 
 Contents:
-        * Introduction
-          
+        * `Introduction :doc: </intro>`
 .. toctree::
    :maxdepth: 2
 
