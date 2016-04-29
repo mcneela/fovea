@@ -1,20 +1,17 @@
 .. Fovea documentation master file, created by
-   sphinx-quickstart on Thu Apr 28 19:33:17 2016.
+   sphinx-quickstart on Thu Apr 28 20:22:46 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Fovea's documentation!
-=================================
-#####
-Fovea
-#####
+Fovea: A Tool for Visualizing Dynamical Systems
+===============================================
 
 Contents:
-        * Introduction
-          
+
 .. toctree::
    :maxdepth: 2
 
+   intro 
 
 
 Indices and tables

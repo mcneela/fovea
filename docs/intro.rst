@@ -1,5 +1,5 @@
-Introduction
-############
+Intro
+#####
 
 Dynamical systems play an important role in many scientific fields, but models of such systems can feature many parameters and variables that are confusing to first time users. Fovea is a python package for assisting researchers in the process of building intuition about dynamical systems implemented in algorithms. The package consists of five files.
 

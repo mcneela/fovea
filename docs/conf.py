@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Fovea documentation build configuration file, created by
-# sphinx-quickstart on Thu Apr 28 19:33:17 2016.
+# sphinx-quickstart on Thu Apr 28 20:22:46 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
