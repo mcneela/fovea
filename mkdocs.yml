@@ -1,5 +1,6 @@
 site_name: Fovea
 pages:
-- Contents: index.md
+- Index: index.md
 - Intro: intro.md
 - Installation: installation.md 
+theme: readthedocs
