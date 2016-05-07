@@ -2,6 +2,6 @@ site_name: Fovea
 pages:
 - Index: index.md
 - Intro: intro.md
-- Installation: installation.md 
-- The Graphics Module: graphics.md
+- Installation: installation.md
+- Graphics: graphics.md 
 theme: readthedocs
