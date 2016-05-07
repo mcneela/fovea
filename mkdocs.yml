@@ -3,4 +3,5 @@ pages:
 - Index: index.md
 - Intro: intro.md
 - Installation: installation.md 
+- The Graphics Module: graphics.md
 theme: readthedocs

@@ -7,4 +7,4 @@
 	* [Windows](installation.md#windows)
 	* [Mac](installation.md#mac)
 	* [Linux](installation.md#linux)
-   
+* [The Graphics Module](graphics.md)   
