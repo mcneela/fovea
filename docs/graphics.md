@@ -1,7 +1,6 @@
 # The Graphics Module
 
-The graphics module contains utilities for visualizing the structures of dynamical systems, neural networks, and more. These utilities are contained in the graphics.py file inside the fovea directory and can be modified to
-and extended to provide additional functionality.
+The graphics module contains utilities for visualizing the structures of dynamical systems, neural networks, and more. These utilities are contained in the graphics.py file inside the fovea directory and can be modified and extended to provide additional functionality.
 
 
 ## `plotter2D`
