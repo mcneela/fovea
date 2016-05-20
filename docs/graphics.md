@@ -89,7 +89,7 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	**TO DO** Finish the example.
 	
 	----
-		def addFig(self, label, title="", xlabel="", ylabel="", tdom=None, domain=None, display=True)
+		def add_fig(self, label, title="", xlabel="", ylabel="", tdom=None, domain=None, display=True)
 
 	Adds a figure to the `plotter2D` object. Labels specifying figures are stored in the instance attribute dictionary
 	`plotter2D.figs`. The keys for this dictionary are the figure "labels" specified in the creation of a figure via
@@ -106,7 +106,7 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	**TO DO** Add example use case.
 
 	----
-		def copyFig(self, newFig, oldFig)
+		def copy_fig(self, newFig, oldFig)
 	
 	Copies the figure object specified the label passed as `oldFig` to a new figure object specified by the label passed to `newFig`.
 
@@ -116,7 +116,7 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	**TO DO** Add example use case.
 
 	----
-		def setFig(self, label=None, **kwargs)
+		def set_fig(self, label=None, **kwargs)
 
 	Sets the figure object specified by `label` as the current figure of the `plotter2D` object.
 
@@ -126,7 +126,7 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	**TO DO** Add example use case.
 
 	----
-		def clearFigData(self, figure_name)
+		def clear_fig_data(self, figure_name)
 
 	Clears all of the figure data associated with the figure given by `figure_name`.
 

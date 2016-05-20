@@ -1,3 +1,4 @@
+from __future__ import division
 from matplotlib.pyplot import *
 from fovea import *
 from queue import *
@@ -10,18 +11,18 @@ class VisualNode:
         self.set_parent(parent)
         self.radius = radius
         self.edge_color = edge_color
+        self.location = None
 
-    def __str__(self):
-        return "Node " + self.label + " at location " + str(self.location) + "."
+    def __repr__(self):
+        if self.location:
+            return "Node " + self.label + " at location " + str(self.location) + "."
+        return "Node " + self.label
 
     def display(self):
         self.display_obj = Circle(self.location, self.radius, ec=self.edge_color, fill=False)
 
-    def set_location(self, location, x_cushion, y_cushion, total_space, max_radius):
-        if not self.parent:
-            self.location = location 
-        else:
-            self.location = (self.parent.location[0], self.parent.location[1] - .25)
+    def set_location(self, location):
+        self.location = location
 
     def set_parent(self, parent):
         if parent:
@@ -53,13 +54,13 @@ class VisualNode:
         self.parent = None
         self.children = []
 
-
 class VisualTree:
     def __init__(self, root):
         self.root = root
         self.tree_fig = figure() 
         self.nodes = self.get_nodes(self.root)
         self.height = self.get_height()
+        self.leaves = self.get_leaves()
         self.mlr = self.max_level_radii()
         self.mll = self.max_level_length()
         self.mnr = self.max_node_radius()
@@ -87,6 +88,9 @@ class VisualTree:
 
     def get_height(self):
         return len(self.nodes)
+
+    def get_leaves(self):
+        return self.nodes[-1]
 
     def max_node_radius(self):
         max_rad = 0
@@ -125,8 +129,17 @@ class VisualTree:
         self.tree_axes.set_ylim([0, ylim])
         return (xlim, ylim)
 
-    def set_patch_locs(self, x_cushion, y_cushion, bounds):
-        self.root
+    def set_patch_locs(self, leaf_nodes):
+        tree_space = self.bounds[1] - 0.25 * self.bounds[1]
+        leaf_space = self.bounds[0] - 0.25 * self.bounds[0]
+        height_offset = (1/8) * self.bounds[1]
+        leaf_offset = (1/8) * self.bounds[0]
+        delta_level = tree_space / self.height
+        num_leaves = len(leaf_nodes)
+        delta_leaf = leaf_space / num_leaves
+        leaf_locs = ([leaf_offset + i * delta_leaf for i, leaf in enumerate(leaf_nodes)], height_offset + delta_level) 
+        for i, node in enumerate(leaf_nodes):
+            node.set_location((leaf_locs[0][i], leaf_locs[1]))
     
     def draw_tree(self, x_cushion=None, y_cushion=None):
         self.tree_plot = self.tree_fig.add_subplot(111, aspect='equal')

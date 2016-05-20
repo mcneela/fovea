@@ -37,6 +37,7 @@ issues with the way in which setuptools attempts to build packages from
 source, consider installing as follows:
 
     virtualenv venv		# Create a virtual environment for Fovea and dependencies
+	source venv/bin/activate    # Activate the virtual environment
 	pip install numpy
 	pip install scipy
 	pip install matplotlib
