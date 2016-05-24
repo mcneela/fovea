@@ -24,8 +24,8 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	
 	Automatically scales domain limits so as to fit the data in all layers in the figure display.
 
-	* `xcushion`: Percentage of x-domain size by which the x domain should be extended. Defaults to 5%.
-	* `ycushion`: Percentage of y-domain size by which the y domain should be extended. Defaults to 5%.
+	* `xcushion`: Percentage of x-domain size by which the x domain should be extended. Defaults to 0.
+	* `ycushion`: Percentage of y-domain size by which the y domain should be extended. Defaults to 0.
 	* `subplot`: The subplot for which the domain should be extended. Defaults to `None`, i.e. extend the domain of the master plot.
 	* `figure`: The figure for which the domain should be extended. Defaults to `None`.
 
@@ -48,7 +48,15 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	* `layer`: The layer to be set as active.
 	* `figure`: The figure in which the active layer resides. Defaults to `None`.
 	
-	**TO DO: Provide example use case.**
+	Example:
+		
+		>>> plotter.add_layer('layer_one')
+		>>> plotter.add_layer('layer_two')
+		>>> print(plotter.active_layer)
+		>>> ('Master', 'layer_two')
+		>>> plotter.set_active_layer('layer_one')
+		>>> print(plotter.active_layer)
+		>>> ('Master', 'layer_one') 	
 
 	----
 		def show_legends(self, figure=None, subplot=None)
