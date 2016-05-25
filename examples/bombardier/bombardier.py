@@ -18,7 +18,7 @@ from fovea import common, prep
 import fovea.graphics as gx
 
 
-gentype = 'dopri'
+gentype = 'vode'
 
 # let rocket mass be negligible
 # and G chosen to absorb m_rocket
@@ -85,7 +85,7 @@ class GUIrocket(gx.diagnosticGUI):
         """
         global next_fighandle
 
-        plotter = gx.plotter2D()
+        plotter = gx.Plotter()
         gx.diagnosticGUI.__init__(self, plotter)
 
         self.current_domain_handler = dom.GUI_domain_handler(self)
@@ -112,16 +112,16 @@ class GUIrocket(gx.diagnosticGUI):
         #Setup code
         DOI = [(-xdomain_halfwidth,xdomain_halfwidth),(0,1)]
         self.clean() # in case rerun in same session
-        self.addFig('master',
+        self.add_fig('master',
                         title='Bombardier',
                         xlabel='x', ylabel='y',
                         domain=DOI)
 
         #Setup all layers
 
-        self.addLayer('trajs')
-        self.addLayer('bodies', kind='patch')
-        self.addLayer('text', kind='text')
+        self.add_layer('trajs')
+        self.add_layer('bodies', kind='patch')
+        self.add_layer('text', kind='text')
 
         self.name = 'gamespace'
 
@@ -137,14 +137,14 @@ class GUIrocket(gx.diagnosticGUI):
 
         self.fignum = 1
 
-        fig_struct, fig = self.plotter._resolveFig('master')
+        fig_struct, fig = self.plotter._resolve_fig('master')
         self.ax = fig_struct.arrange['11']['axes_obj']
 
-        self.addWidget(Slider, callback=self.updateAng, axlims = (0.1, 0.055, 0.65, 0.03),
+        self.add_widget(Slider, callback=self.updateAng, axlims = (0.1, 0.055, 0.65, 0.03),
                       label='Shoot Angle', valmin= -maxangle, valmax= maxangle,
                       valinit= self.ang, color='b', dragging=False, valfmt='%2.3f')
 
-        self.addWidget(Slider, callback=self.updateVel, axlims=(0.1, 0.02, 0.65, 0.03),
+        self.add_widget(Slider, callback=self.updateVel, axlims=(0.1, 0.02, 0.65, 0.03),
                       label='Shoot Speed', valmin=0.01, valmax=2,
                       valinit=self.vel, color='b',
                       dragging=False, valfmt='%1.4f')
@@ -164,7 +164,7 @@ class GUIrocket(gx.diagnosticGUI):
 
         # Move these to a _recreate method than can be reused for un-pickling
 
-        self.addWidget(Button, callback=self.go, axlims=(0.005, 0.1, 0.045, 0.03), label='Go!')
+        self.add_widget(Button, callback=self.go, axlims=(0.005, 0.1, 0.045, 0.03), label='Go!')
 
         # context_changed flag set when new objects created using declare_in_context(),
         # and unset when Generator is created with the new context code included
@@ -175,7 +175,8 @@ class GUIrocket(gx.diagnosticGUI):
         self.go(run=False)
         # force call to graphics_refresh because run=False above
         self.graphics_refresh(cla=False)
-        plt.show()
+        # TEMP
+        #plt.show()
 
         # next_fighandle for whenever a new model is put in a new figure (new game instance)
         next_fighandle += 1
@@ -197,7 +198,7 @@ class GUIrocket(gx.diagnosticGUI):
             quarts = Pointset({'coordarray': np.array([[self.points['x'][int(0.25*n)], self.points['x'][int(0.5*n)], self.points['x'][int(0.75*n)]],
                                            [self.points['y'][int(0.25*n)], self.points['y'][int(0.5*n)], self.points['y'][int(0.75*n)]]]),
                       'coordnames': ['xq', 'yq']})
-            self.addDataPoints(quarts, coorddict=coorddict)
+            self.add_data_points(quarts, coorddict=coorddict)
 
         except TypeError:
             pass
@@ -209,7 +210,7 @@ class GUIrocket(gx.diagnosticGUI):
                      'speed':
                      {'map_color_to':'x'}
                      }
-        self.addDataPoints(self.points, coorddict=coorddict)
+        self.add_data_points(self.points, coorddict=coorddict)
 
         #Bodies Pointset
         bodsPoints = Pointset({'coordarray': np.array([[self.pos[i][0] for i in range(len(self.pos))],
@@ -221,11 +222,11 @@ class GUIrocket(gx.diagnosticGUI):
                      'radii':
                      {'map_radius_to':'px'}
                      }
-        self.addDataPoints(bodsPoints, coorddict=coorddict)
+        self.add_data_points(bodsPoints, coorddict=coorddict)
 
         pos = np.array(self.pos).transpose()
         for i in range(len(pos[0])):
-            self.plotter.addText(pos[0][i], pos[1][i], i, style='k', layer='text')
+            self.plotter.add_text(pos[0][i], pos[1][i], i, style='k', layer='text')
 
         self.plotter.show(rebuild=False)
 
@@ -478,7 +479,7 @@ class GUIrocket(gx.diagnosticGUI):
     def run(self, tmax=None):
         self.model.compute('test', force=True)
         self.traj = self.model.trajectories['test']
-        self.addDataTraj(self.traj)
+        self.add_data_traj(self.traj)
         self.pts = self.points #Shouldn't have to do this.
         if self.calc_context is not None:
             # Update calc context
