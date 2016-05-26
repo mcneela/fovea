@@ -3,9 +3,9 @@
 The graphics module contains utilities for visualizing the structures of dynamical systems, neural networks, and more. These utilities are contained in the graphics.py file inside the fovea directory and can be modified and extended to provide additional functionality.
 
 
-## `plotter2D`
+## `Plotter`
 ----
-* ### **class** `plotter2D`
+* ### **class** `Plotter`
 	----
 		def	__init__(self, dm=None)
 
@@ -13,11 +13,11 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	
 	* `dm`: An optional **diagnostic manager** object.
 	
-	Initializing the plotter2D object cleans all existing figures and plots from memory.
+	Initializing the Plotter object cleans all existing figures and plots from memory.
 
 	Example of proper object instantiation:
 
-		myplotter = plotter2D()
+		myplotter = Plotter()
 
 	----
 		def auto_scale_domain(self, xcushion=0.05, ycushion=0.05, subplot=None, figure=None)
@@ -32,10 +32,10 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	Example:
 		
 		# Original figure has x-domain: (-5, 5) and y-domain: (2, 2)
-		plotter.addFig('Master', title='quadratic', xlabel='x', ylabel='y', domain=[(-5, 5), (2,2)])
+		plotter.add_fig('Master', title='quadratic', xlabel='x', ylabel='y', domain=[(-5, 5), (2,2)])
 		
 		# Data points outside of the domain are added to the figure.
-		gui.addDataPoints([[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25]], layer='fn_data', style='g.')
+		gui.add_data_points([[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5], [25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25]], layer='fn_data', style='g.')
 
 		# Domain is scaled to x-domain: (-5, 5) and y-domain: (0, 25)
 		plotter.auto_scale_domain()
@@ -43,7 +43,7 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	----
 		def set_active_layer(self, layer, figure=None)
 
-	Sets the `plotter2D.active_layer` attribute to `(figure, layer)`.
+	Sets the `Plotter.active_layer` attribute to `(figure, layer)`.
 	
 	* `layer`: The layer to be set as active.
 	* `figure`: The figure in which the active layer resides. Defaults to `None`.
@@ -78,40 +78,49 @@ The graphics module contains utilities for visualizing the structures of dynamic
 
 	Example:
 
-		>>> plotter.addFig('Master', title='quadratic', xlabel='x', ylabel='y', domain=[(-5, 5), (2,2)])
+		>>> plotter.add_fig('Master', title='quadratic', xlabel='x', ylabel='y', domain=[(-5, 5), (2,2)])
 
-		>>> plotter.addLayer('fn_data')
+		>>> plotter.add_layer('fn_data')
 
-		>>> plotter.arrangeFig([1,1], {'11':
-								   {'name': 'BEFORE',
+		>>> plotter.arrange_fig([1,1], {'11':
+								   {'name': 'Quadratic Plot',
 									'scale': [(-5,5),(-2,2)],
 									'layers': ['fn_data'],
 									'axes_vars': ['x', 'y'],
 								   }})
-				
+
+		>>> plotter.add_data(([-2, -1, 0, 1, 2], [4, 1, 0, 1, 4]), layer='fn_data')				
+
 		>>> plotter.show_legends()
 		LAYER: fn_data
 		  sub-plot: 11
 		  style b-
-
-	**TO DO** Finish the example.
+		  data:
+			name: Master_fn_data, style: b-
 	
 	----
 		def add_fig(self, label, title="", xlabel="", ylabel="", tdom=None, domain=None, display=True)
 
-	Adds a figure to the `plotter2D` object. Labels specifying figures are stored in the instance attribute dictionary
-	`plotter2D.figs`. The keys for this dictionary are the figure "labels" specified in the creation of a figure via
-	`addFig`.
+	Adds a figure to the `Plotter` object. Labels specifying figures are stored in the instance attribute dictionary
+	`Plotter.figs`. The keys for this dictionary are the figure "labels" specified during the creation of a figure via
+	`add_fig`.
 
 	* `label`: A string identifier for the figure. Also serves as the dictionary key associated with the figure object.
-	* `title`: A string to be used as the display title for the figure.
+	* `title`: A string to be used as the window title for the figure.
 	* `xlabel`: A string specifying a display label for the x-axis.
 	* `ylabel`: A string specifying a display label for the y-axis.
 	* `tdom`: Optional tuple specifying a time domain. Defaults to `None`.	
 	* `domain`: A two-element list specifying two tuples giving the domain ranges for the x and y axes, respectively.
 	* `display`: A boolean determining whether figure should be plotted when the plotter is built. Defaults to `True`.
 
-	**TO DO** Add example use case.
+	Example:
+	
+		>>> plotter = Plotter()
+		>>> gui = diagnosticGUI(plotter)
+		>>> plotter.add_fig('Figure 1', title='EEG Data', domain=[(-5, 5), (-5, 5)])
+		>>> plotter.add_fig('Figure 2', title='EKG Data', domain=[(-10, 10), (-10, 10)]
+		# Two figure windows will appear upon calling gui.build_plotter()
+		>>> gui.build_plotter()
 
 	----
 		def copy_fig(self, newFig, oldFig)
@@ -121,12 +130,44 @@ The graphics module contains utilities for visualizing the structures of dynamic
 	* `newFig`: String label for the new figure to be created.
 	* `oldFig`: String label for the old figure to be copied.
 
-	**TO DO** Add example use case.
+	Example:
+	
+		>>> plotter = Plotter()
+		>>> plotter.add_fig('Master', title="The One Figure to Rule Them All, domain=[(-10, 10), (-10, 10)])
+		>>> plotter.copy_fig('Challenger', 'Master')
+		>>> plotter.figs
 
+		{'Master': args (
+		 title = The One Figure to Rule Them All,
+		 layers = {},
+		 ylabel = ,
+		 xlabel = ,
+		 autoscaling = True,
+		 display = True,
+		 domain = [(-10, 10), (-10, 10)],
+		 fignum = 1,
+		 window = None,
+		 arrange = [],
+		 shape = [1, 1],
+		 tdom = None
+		), 'Challenger': args (
+		 title = The One Figure to Rule Them All,
+		 layers = {},
+		 ylabel = ,
+		 xlabel = ,
+		 shape = [1, 1],
+		 autoscaling = True,
+		 display = True,
+		 fignum = 2,
+		 window = None,
+		 arrange = []
+		)}
+	
+		# There is no longer but one figure to rule them all! 	
 	----
 		def set_fig(self, label=None, **kwargs)
 
-	Sets the figure object specified by `label` as the current figure of the `plotter2D` object.
+	Sets the figure object specified by `label` as the current figure of the `Plotter` object.
 
 	* `label`: String label for the figure to be set as the current figure.
 	* `**kwargs`: A list of key, value pairs for the setting of properties of the new current figure.
