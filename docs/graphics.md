@@ -231,3 +231,41 @@ The graphics module contains utilities for visualizing the structures of dynamic
 		plotter.clear_fig_data('Minor')
 		
 		gui.build_plotter((20, 20), with_times=False)
+
+	----
+		def arrange_fig(self, shape, arrPlots, figure=None)
+
+	For the figure given by `figure`, arranges figure layers into subplots defined as a series
+	of dictionaries in `arrPlots`. Each subplot dictionary specifies the subplot's grid position 
+	within the figure window. The value associated with each of these position keys is another
+	dictionary specifying the subplot name, axes scales, layers, and axes variables.
+
+	`shape`: The total row-by-column size of the subplots grid. For example, a 2x3 grid of subplots
+	can be specified by passing `[2, 3]` for `shape`.
+
+	`arrPlots`: A nested dictionary specifying subplot grid positions and plot data as explained above.
+
+	`figure`: The figure to be arranged. Defaults to the current figure.
+
+	Example:
+
+		# Creates a single-row, three-column arrangement of subplots with their associated characteristics.
+		plotter.arrange_fig([1,3], {'11':
+									   {'name': 'BEFORE',
+										'scale': [(-10,10),(-10,10)],
+										'layers': ['pre_processed_data'],
+										'axes_vars': ['x', 'y', 'z'],
+										'projection':'3d'},
+									   '12':
+									   {'name': 'AFTER',
+										'scale': [(-20,20),(-20,20)],
+										'layers': ['post_processed_data'],
+										'axes_vars': ['a', 'b']},
+									   '13':
+									   {'name': 'Variance by Components',
+										'scale': [(0.5,10),(0,1)],
+										'layers': ['variance_data'],
+										'axes_vars': ['x', 'y']},
+									   })
+
+
