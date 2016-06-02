@@ -267,5 +267,45 @@ The graphics module contains utilities for visualizing the structures of dynamic
 										'layers': ['variance_data'],
 										'axes_vars': ['x', 'y']},
 									   })
+	----
+		def add_layer(self, layer_name, figure=None, set_to_active=True, subplot=None, **kwargs):
 
+	Adds an empty layer to the figure specified by `figure`. By default, the most recent layer added becomes
+	the figure's active layer unless set_to_active is `False`.
 
+	`layer_name`:		The string label used to reference the layer in such contexts as that of `arrange_fig()`.
+	`figure`:			The name of the figure to which the layer should be added. Defaults to the current figure.
+	`set_to_active`:	Boolean specifying whether the layer to be added should be the figure's active layer.
+	`subplot`:			The figure subplot to which the layer should be attached. Defaults to `None`.
+	`**kwargs`:			A series of optional arguments specifying layer attributes. Possible options include...
+							1. `display`:	A boolean specifying whether the layer should be displayed.
+							2. `kind`:		A string identifier of the layer's data-type. E.g. 'data', 'vline', 'text', etc.
+							3. `scale`:		A list of tuples specifying axes scales.
+
+	Example: **TO DO**: Add example use case.
+
+	----
+		def set_layer(self, label, figure=None, **kwargs):
+	
+	Use to set layer attributes to provided values.
+
+	`label`:	The layer name.
+	`figure`:	The figure in which the target layer resides.
+	`**kwargs:	A series of layer attribute names and their associated values.
+
+	----
+		def add_patch(self, data, patch, figure=None, layer=None, subplot=None,
+					  name=None, display=True, force=False, log=None, **kwargs):
+
+	Add a Matplotlib patch object to `figure`, `layer`, and/or `subplot`.
+	
+	`data`:			The patch data.
+	`patch`:		The patch object instance.
+	`figure`:		The figure to which the patch is to be added.
+	`layer`:		The layer to which the patch is to be added.
+	`subplot`:		The subplot to which the patch is to be added.
+	`name`:			The name of the patch.
+	`display`:		Boolean specifying whether the patch is to be displayed.
+	`force`:
+	`log`:			A log object to which log information is to be written.
+	`**kwargs`:		Patch instantiation values.
